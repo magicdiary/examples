@@ -4,7 +4,7 @@ import shutil
 from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand, CommandError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.client import Client
 
 
@@ -41,8 +41,8 @@ class Command(BaseCommand):
                 shutil.rmtree(settings.SITE_OUTPUT_DIRECTORY)
             os.mkdir(settings.SITE_OUTPUT_DIRECTORY)
         os.makedirs(settings.STATIC_ROOT, exist_ok=True)
-        call_command('collectstatic', interactive=False, clear=True, verbosity=0)
-        call_command('compress', interactive=False, force=True)
+        call_command('collectstatic',  clear=True, verbosity=0)
+        call_command('compress',  force=True)
         client = Client()
         for page in pages:
             url = reverse('page', kwargs={'slug': page})
